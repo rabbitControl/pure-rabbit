@@ -1,0 +1,6 @@
+[submodule "dependencies/scaryws"]
+	path = dependencies/scaryws
+	url = https://github.com/rabbitControl/scaryws.git
+[submodule "dependencies/rcp-c"]
+	path = dependencies/rcp-c
+	url = https://github.com/rabbitControl/rcp-c.git
