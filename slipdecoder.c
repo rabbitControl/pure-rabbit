@@ -1,0 +1,145 @@
+#include <stdbool.h>
+
+#include <m_pd.h>
+
+#include <rcp_slip.h>
+
+
+typedef struct _slipdecoder
+{
+    t_object x_obj;
+
+    rcp_slip* slip;
+
+    t_outlet* list_out;
+
+} t_slipdecoder;
+
+static t_class *slipdecoder_class;
+
+
+static float GetFloat(const t_atom a) { return a.a_w.w_float; }
+static bool IsFloat(const t_atom a) { return a.a_type == A_FLOAT; }
+
+#ifdef PD_MAJOR_VERSION
+static float GetAFloat(const t_atom a, float def) { return IsFloat(a)?GetFloat(a):def; }
+static bool IsInt(const t_atom a) { return false; }
+static void SetInt(t_atom *a, int v) { a->a_type = A_FLOAT; a->a_w.w_float = (float)v; }
+#else
+static float GetAFloat(const t_atom a, float def = 0) { return IsFloat(a)?GetFloat(a):(IsInt(a)?GetInt(a):def); }
+static bool IsInt(const t_atom a) { return a.a_type == A_INT; }
+static void SetInt(t_atom *a,int v) { a->a_type = A_INT; a->a_w.w_long = v; }
+#endif
+
+static bool CanbeInt(const t_atom a) { return IsFloat(a) || IsInt(a); }
+static int GetAInt(const t_atom a,int def) { return (int)GetAFloat(a,(float)def); }
+
+
+static void packet_cb(char* data, size_t data_size, void* user)
+{
+    if (user == NULL)
+    {
+        return;
+    }
+
+    t_slipdecoder* x = (t_slipdecoder*)user;
+
+    t_atom atoms[data_size];
+
+    for (size_t i=0; i<data_size; i++)
+    {
+        SetInt(&atoms[i], (unsigned char)data[i]);
+    }
+
+    outlet_list(x->list_out, NULL, data_size, atoms);
+}
+
+
+// pd interfacea
+
+void slipdecoder_float(t_slipdecoder *x, float f)
+{
+    int data = (int)f;
+    if (data < 256 && data >= 0)
+    {
+        char d = (char)data;
+        rcp_slip_append(x->slip, d);
+    }
+}
+
+void slipdecoder_list(t_slipdecoder *x, t_symbol *s, int argc, t_atom *argv)
+{
+    for (int i=0; i<argc; i++)
+    {
+        if (CanbeInt(argv[i]))
+        {
+            int id = GetAInt(argv[i], -1);
+            if (id >= 0 &&
+                id < 256)
+            {
+                rcp_slip_append(x->slip, (char)id);
+            }
+        }
+    }
+}
+
+
+// new
+
+void *slipdecoder_new(t_symbol *s, int argc, t_atom *argv)
+{
+    t_slipdecoder *x = (t_slipdecoder *)pd_new(slipdecoder_class);
+
+    x->list_out = outlet_new(&x->x_obj, &s_list);
+
+    int buffer_size = 1024;
+
+    for (int i=0; i<argc; i++)
+    {
+        if (CanbeInt(argv[i]))
+        {
+            buffer_size = GetAInt(argv[i], 1024);
+        }
+    }
+
+    if (buffer_size <= 0)
+    {
+        pd_error(x, "please provide a valid buffersize");
+        buffer_size = 1024;
+    }
+
+    // create parser
+    x->slip = rcp_slip_create(buffer_size);
+    if (x->slip)
+    {
+        rcp_slip_set_user(x->slip, x);
+        rcp_slip_set_packet_cb(x->slip, packet_cb);
+    }
+
+    return (void *)x;
+}
+
+
+void slipdecoder_free(t_slipdecoder *x)
+{
+    if (x->slip)
+    {
+        rcp_slip_free(x->slip);
+    }
+
+    outlet_free(x->list_out);
+}
+
+void slipdecoder_setup(void) {
+    slipdecoder_class = class_new(gensym("slipdecoder"),
+                           (t_newmethod)slipdecoder_new,
+                           (t_method)slipdecoder_free,
+                           sizeof(t_slipdecoder),
+                           CLASS_DEFAULT,
+                           A_GIMME,
+                           0);
+
+
+    class_addfloat(slipdecoder_class, (t_method)slipdecoder_float);
+    class_addlist(slipdecoder_class, (t_method)slipdecoder_list);
+}

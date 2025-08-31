@@ -1,0 +1,12 @@
+#N canvas 216 167 215 238 12;
+#X obj 36 31 inlet;
+#X obj 36 185 outlet;
+#X obj 65 155 outlet;
+#X obj 36 67 rabbit.client;
+#X obj 94 126 outlet;
+#X obj 124 98 outlet;
+#X connect 0 0 3 0;
+#X connect 3 0 1 0;
+#X connect 3 1 2 0;
+#X connect 3 2 4 0;
+#X connect 3 3 5 0;

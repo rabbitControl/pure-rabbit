@@ -1,0 +1,11 @@
+#N canvas 83 57 316 310 12;
+#X obj 87 173 print;
+#X obj 87 98 loadbang;
+#X text 17 21 ()();
+#X text 24 35 oO RabbitControl for Pd;
+#X text 31 48 x;
+#X obj 87 150 rabbit.client;
+#X msg 87 124 getrcpversion;
+#X connect 1 0 6 0;
+#X connect 5 0 0 0;
+#X connect 6 0 5 0;

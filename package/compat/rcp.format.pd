@@ -1,0 +1,8 @@
+#N canvas 211 169 215 169 12;
+#X obj 36 31 inlet;
+#X obj 36 115 outlet;
+#X obj 124 115 outlet;
+#X obj 36 67 rabbit.format;
+#X connect 0 0 3 0;
+#X connect 3 0 1 0;
+#X connect 3 1 2 0;
