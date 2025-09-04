@@ -22,7 +22,7 @@ include(${PDCMAKE_FILE})
 
 
 # add help files
-pd_add_datafile(RabbitControl package/help/pd/1.RabbitControl-Overview.pd)
+pd_add_datafile(RabbitControl package/help/pd/1.RabbitControl-Overview-help.pd)
 pd_add_datafile(RabbitControl package/help/pd/rabbit.client-help.pd)
 pd_add_datafile(RabbitControl package/help/pd/rabbit.format-help.pd)
 pd_add_datafile(RabbitControl package/help/pd/rabbit.parse-help.pd)
