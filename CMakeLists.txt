@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.30)
 
-project(RabbitControl LANGUAGES C CXX VERSION 1.1.0)
+project(RabbitControl LANGUAGES C CXX VERSION 2.0.0)
 
 
 set(CMAKE_CXX_STANDARD 11)
