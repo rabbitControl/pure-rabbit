@@ -4,7 +4,7 @@
 #include <arpa/inet.h>
 #elif defined(__linux__)
 #include <endian.h>
-elif defined(_WIN32)
+#elif defined(_WIN32)
 // TODO
 #endif
 
