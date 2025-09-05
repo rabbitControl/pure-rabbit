@@ -1,5 +1,13 @@
 #include <string.h>
-#include <sys/_endian.h>
+
+#if defined(__APPLE__)
+#include <arpa/inet.h>
+#elif defined(__linux__)
+#include <endian.h>
+elif defined(_WIN32)
+// TODO
+#endif
+
 
 #include <m_pd.h>
 
@@ -21,7 +29,14 @@ void sizeprefix_list(t_sizeprefix *x, t_symbol *s, int argc, t_atom *argv)
 {
     t_atom size_a[4];
     char size_c[4];
+
+#if defined(__APPLE__)
     uint32_t n = htonl(argc);
+#elif defined(__linux__)
+    uint32_t n = htobe32(argc);
+#elif defined(_WIN32)
+    // TODO
+#endif
 
     memcpy(size_c, &n, sizeof(uint32_t));
 

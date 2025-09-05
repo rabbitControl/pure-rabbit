@@ -1,5 +1,4 @@
 #include <string.h>
-#include <sys/_endian.h>
 
 #include <m_pd.h>
 #include <rcp_sppp.h>
