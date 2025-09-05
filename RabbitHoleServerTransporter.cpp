@@ -41,6 +41,7 @@ RabbitHoleServerTransporter::RabbitHoleServerTransporter(t_pd* x, rcp_server* se
 {
     // make sure it sends in binary
     binary(true);
+    verifyPeer(false);
 
     m_transporter = (rcp_server_transporter*)RCP_CALLOC(1, sizeof(rcp_server_transporter));
 
