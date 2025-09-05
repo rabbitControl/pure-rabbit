@@ -9,8 +9,6 @@ extern "C"{
 static t_class *rcp_parse_class;
 
 
-// pd interfacea
-
 void rcpparse_list(t_rabbit_parse_pd *x, t_symbol *s, int argc, t_atom *argv)
 {
     if (x->parse)
@@ -19,7 +17,6 @@ void rcpparse_list(t_rabbit_parse_pd *x, t_symbol *s, int argc, t_atom *argv)
     }
 }
 
-// new
 
 void *rcpparse_pd_new(t_symbol *s)
 {
@@ -38,6 +35,7 @@ void rcpparse_pd_free(t_rabbit_parse_pd *x)
         delete x->parse;
     }
 }
+
 
 void setup_rabbit0x2eparse(void) {
     rcp_parse_class = class_new(gensym("rabbit.parse"),

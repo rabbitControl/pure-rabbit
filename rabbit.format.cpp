@@ -13,8 +13,6 @@ extern "C"{
 static t_class *rcp_format_class;
 
 
-// pd interfacea
-
 void rcpformat_bang(t_rabbit_format_pd *x)
 {
     if (x->format)
@@ -22,6 +20,7 @@ void rcpformat_bang(t_rabbit_format_pd *x)
         x->format->handleBang();
     }
 }
+
 
 void rcpformat_float(t_rabbit_format_pd *x, float f)
 {
@@ -31,6 +30,7 @@ void rcpformat_float(t_rabbit_format_pd *x, float f)
     }
 }
 
+
 void rcpformat_sym(t_rabbit_format_pd *x, t_symbol *s)
 {
     if (x->format)
@@ -39,16 +39,13 @@ void rcpformat_sym(t_rabbit_format_pd *x, t_symbol *s)
     }
 }
 
+
 void rcpformat_list(t_rabbit_format_pd *x, t_symbol *s, int argc, t_atom *argv)
 {
     if (x->format)
     {
     }
 }
-
-// void rcpformat_any(t_rcp_format *x, t_symbol *s, int argc, t_atom *argv)
-// {
-// }
 
 
 void rcpformat_set_id(t_rabbit_format_pd *x, float f)
@@ -59,7 +56,7 @@ void rcpformat_set_id(t_rabbit_format_pd *x, float f)
     }
 }
 
-// type
+
 void rcpformat_set_type(t_rabbit_format_pd *x, t_symbol* s)
 {
     if (x->format)
@@ -67,6 +64,7 @@ void rcpformat_set_type(t_rabbit_format_pd *x, t_symbol* s)
         x->format->setType(s);
     }
 }
+
 
 void rcpformat_get_type(t_rabbit_format_pd *x)
 {
@@ -81,7 +79,7 @@ void rcpformat_get_type(t_rabbit_format_pd *x)
     }
 }
 
-// label
+
 void rcpformat_set_label(t_rabbit_format_pd *x, t_symbol* s)
 {
     if (x->format)
@@ -89,6 +87,7 @@ void rcpformat_set_label(t_rabbit_format_pd *x, t_symbol* s)
         x->format->setLabel(s);
     }
 }
+
 
 void rcpformat_get_label(t_rabbit_format_pd *x)
 {
@@ -103,6 +102,7 @@ void rcpformat_get_label(t_rabbit_format_pd *x)
     }
 }
 
+
 void rcpformat_clear_label(t_rabbit_format_pd *x)
 {
     if (x->format)
@@ -111,8 +111,6 @@ void rcpformat_clear_label(t_rabbit_format_pd *x)
     }
 }
 
-
-// new
 
 void *rcpformat_pd_new(t_symbol *s, int argc, t_atom *argv)
 {
@@ -131,6 +129,7 @@ void rcpformat_pd_free(t_rabbit_format_pd *x)
         delete x->format;
     }
 }
+
 
 void setup_rabbit0x2eformat(void) {
     rcp_format_class = class_new(gensym("rabbit.format"),

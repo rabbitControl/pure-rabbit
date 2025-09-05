@@ -49,7 +49,7 @@ void pd_client_disconnected(t_pd *obj, void *data)
 }
 
 
-// pd interfacea
+// pd interface
 
 void rcpserver_bang(t_rabbit_server_pd *x)
 {
@@ -213,6 +213,7 @@ void rcpserver_pd_free(t_rabbit_server_pd *x)
         delete x->parameter_server;
     }
 }
+
 
 void setup_rabbit0x2eserver(void) {
     rcp_server_pd_class = class_new(gensym("rabbit.server"),

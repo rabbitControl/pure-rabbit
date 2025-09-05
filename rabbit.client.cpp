@@ -63,7 +63,6 @@ void post_rcp_version(t_rabbit_client_pd *x)
     PdRcp::postVersion();
 }
 
-// new
 
 void *rcpclient_pd_new(t_symbol *s, int argc, t_atom *argv)
 {
@@ -82,6 +81,7 @@ void rcpclient_pd_free(t_rabbit_client_pd *x)
         delete x->parameter_client;
     }
 }
+
 
 void setup_rabbit0x2eclient(void) {
     rcp_client_pd_class = class_new(gensym("rabbit.client"),

@@ -55,8 +55,6 @@ static void packet_cb(char* data, size_t data_size, void* user)
 }
 
 
-// pd interfacea
-
 void slipdecoder_float(t_slipdecoder *x, float f)
 {
     int data = (int)f;
@@ -66,6 +64,7 @@ void slipdecoder_float(t_slipdecoder *x, float f)
         rcp_slip_append(x->slip, d);
     }
 }
+
 
 void slipdecoder_list(t_slipdecoder *x, t_symbol *s, int argc, t_atom *argv)
 {
@@ -83,8 +82,6 @@ void slipdecoder_list(t_slipdecoder *x, t_symbol *s, int argc, t_atom *argv)
     }
 }
 
-
-// new
 
 void *slipdecoder_new(t_symbol *s, int argc, t_atom *argv)
 {
@@ -129,6 +126,7 @@ void slipdecoder_free(t_slipdecoder *x)
 
     outlet_free(x->list_out);
 }
+
 
 void slipdecoder_setup(void) {
     slipdecoder_class = class_new(gensym("slipdecoder"),

@@ -55,8 +55,6 @@ static void packet_cb(const char* data, size_t data_size, void* user)
 }
 
 
-// pd interfacea
-
 void sppp_float(t_sppp *x, float f)
 {
     int data = (int)f;
@@ -66,6 +64,7 @@ void sppp_float(t_sppp *x, float f)
         rcp_sppp_data(x->parser, &d, 1);
     }
 }
+
 
 void sppp_list(t_sppp *x, t_symbol *s, int argc, t_atom *argv)
 {
@@ -96,13 +95,12 @@ void sppp_list(t_sppp *x, t_symbol *s, int argc, t_atom *argv)
     rcp_sppp_data(x->parser, data, argc - offset);
 }
 
+
 void sppp_reset(t_sppp* x)
 {
     rcp_sppp_reset(x->parser);
 }
 
-
-// new
 
 void *sppp_new(t_symbol *s, int argc, t_atom *argv)
 {
@@ -144,6 +142,7 @@ void sppp_free(t_sppp *x)
 
     outlet_free(x->list_out);
 }
+
 
 void sppp_setup(void) {
     sppp_class = class_new(gensym("sppp"),

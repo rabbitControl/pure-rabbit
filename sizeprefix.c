@@ -23,8 +23,6 @@ typedef struct _sizeprefix
 static t_class *sizeprefix_class;
 
 
-// pd interfacea
-
 void sizeprefix_list(t_sizeprefix *x, t_symbol *s, int argc, t_atom *argv)
 {
     t_atom size_a[4];
@@ -56,9 +54,6 @@ void sizeprefix_list(t_sizeprefix *x, t_symbol *s, int argc, t_atom *argv)
 }
 
 
-
-// new
-
 void *sizeprefix_new(t_symbol *s)
 {
     t_sizeprefix *x = (t_sizeprefix *)pd_new(sizeprefix_class);
@@ -75,6 +70,7 @@ void sizeprefix_free(t_sizeprefix *x)
     outlet_free(x->list_out);
     outlet_free(x->prefix_out);
 }
+
 
 void sizeprefix_setup(void) {
     sizeprefix_class = class_new(gensym("sizeprefix"),

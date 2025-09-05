@@ -36,8 +36,6 @@ static void data_out(char data, void* user)
 }
 
 
-// pd interfacea
-
 void slipencoder_list(t_slipencoder *x, t_symbol *s, int argc, t_atom *argv)
 {
     std::vector<char> data(argc);
@@ -78,8 +76,6 @@ void slipencoder_list(t_slipencoder *x, t_symbol *s, int argc, t_atom *argv)
 }
 
 
-// new
-
 void *slipencoder_new(t_symbol *s)
 {
     t_slipencoder *x = (t_slipencoder *)pd_new(slipencoder_class);
@@ -94,6 +90,7 @@ void slipencoder_free(t_slipencoder *x)
 {
     outlet_free(x->list_out);
 }
+
 
 void slipencoder_setup(void) {
     slipencoder_class = class_new(gensym("slipencoder"),
