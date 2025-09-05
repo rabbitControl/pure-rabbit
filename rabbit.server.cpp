@@ -135,7 +135,6 @@ void rcpserver_set_rabbithole(t_rabbit_server_pd *x, t_symbol* sym)
 {
     if (x->parameter_server)
     {
-        post("hole: %s", sym->s_name);
         x->parameter_server->setRabbithole(sym->s_name);
     }
 }
