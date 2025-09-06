@@ -8,4 +8,8 @@ set(RCP_PARSE_SOURCES
 
 pd_add_external(${RCP_PARSE} "${RCP_PARSE_SOURCES}")
 
-target_link_libraries(${RCP_PARSE} rcpc)
+target_link_libraries(${RCP_PARSE} PRIVATE rcpc)
+
+if (WIN32)
+  target_link_libraries(${RCP_PARSE} PRIVATE wsock32 ws2_32)
+endif()

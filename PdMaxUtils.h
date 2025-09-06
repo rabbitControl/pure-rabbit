@@ -16,6 +16,11 @@ static void setSymbol(t_atom& a,const t_symbol* s)
     a.a_w.w_symbol = const_cast<t_symbol *>(s);
 }
 
+static float getAFloat(const t_atom& a, float def)
+{
+    return a.a_type == A_FLOAT ? a.a_w.w_float : def;
+}
+
 static bool isInt(const t_atom &)
 {
     return false;
@@ -59,6 +64,11 @@ static void setInt(t_atom& a, int v)
     a.a_w.w_long = v;
 }
 
+static float getAFloat(const t_atom& a, float def = 0)
+{
+    return a.a_type == A_FLOAT ? a.a_w.w_float : (isInt(a) ? a->a_w.w_long : def));
+}
+
 #endif
 
 
@@ -81,6 +91,11 @@ static void setFloat(t_atom& a,float v)
 {
     a.a_type = A_FLOAT;
     a.a_w.w_float = v;
+}
+
+static int getAInt(const t_atom& a, int def)
+{
+    return (int)getAFloat(a,(float)def);
 }
 
 }

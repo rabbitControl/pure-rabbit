@@ -16,5 +16,5 @@ set(RCP_SERVER_SOURCES
 pd_add_external(${RCP_SERVER} "${RCP_SERVER_SOURCES}")
 
 scaryws_setup_target(${RCP_SERVER})
-target_link_libraries(${RCP_SERVER} scaryws)
-target_link_libraries(${RCP_SERVER} rcpc)
+target_link_libraries(${RCP_SERVER} PRIVATE scaryws)
+target_link_libraries(${RCP_SERVER} PRIVATE rcpc)

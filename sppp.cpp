@@ -3,6 +3,15 @@
 #include <m_pd.h>
 #include <rcp_sppp.h>
 
+#include "PdMaxUtils.h"
+
+using namespace PdMaxUtils;
+
+#ifdef __cplusplus
+extern "C"{
+#endif
+
+
 typedef struct _sppp
 {
     t_object x_obj;
@@ -17,24 +26,6 @@ static t_class *sppp_class;
 
 
 
-static float GetFloat(const t_atom a) { return a.a_w.w_float; }
-static bool IsFloat(const t_atom a) { return a.a_type == A_FLOAT; }
-
-#ifdef PD_MAJOR_VERSION
-static float GetAFloat(const t_atom a, float def) { return IsFloat(a)?GetFloat(a):def; }
-static bool IsInt(const t_atom a) { return false; }
-static void SetInt(t_atom *a, int v) { a->a_type = A_FLOAT; a->a_w.w_float = (float)v; }
-#else
-static float GetAFloat(const t_atom a, float def = 0) { return IsFloat(a)?GetFloat(a):(IsInt(a)?GetInt(a):def); }
-static bool IsInt(const t_atom a) { return a.a_type == A_INT; }
-static void SetInt(t_atom *a,int v) { a->a_type = A_INT; a->a_w.w_long = v; }
-#endif
-
-static bool CanbeInt(const t_atom a) { return IsFloat(a) || IsInt(a); }
-static int GetAInt(const t_atom a,int def) { return (int)GetAFloat(a,(float)def); }
-
-
-
 static void packet_cb(const char* data, size_t data_size, void* user)
 {
     if (user == NULL)
@@ -44,14 +35,16 @@ static void packet_cb(const char* data, size_t data_size, void* user)
 
     t_sppp* x = (t_sppp*)user;
 
-    t_atom atoms[data_size];
+    t_atom* atoms = new t_atom[data_size];
 
     for (size_t i=0; i<data_size; i++)
     {
-        SetInt(&atoms[i], data[i]);
+        setInt(atoms[i], data[i]);
     }
 
     outlet_list(x->list_out, NULL, data_size, atoms);
+
+    delete [] atoms;
 }
 
 
@@ -68,14 +61,14 @@ void sppp_float(t_sppp *x, float f)
 
 void sppp_list(t_sppp *x, t_symbol *s, int argc, t_atom *argv)
 {
-    char data[argc];
+    char* data = new char[argc];
     int offset = 0;
 
     for (int i=0; i<argc; i++)
     {
-        if (CanbeInt(argv[i]))
+        if (canBeInt(argv[i]))
         {
-            int id = (int)GetAInt(argv[i], -1);
+            int id = (int)getAInt(argv[i], -1);
             if (id >= 0 &&
                 id < 256)
             {
@@ -93,6 +86,8 @@ void sppp_list(t_sppp *x, t_symbol *s, int argc, t_atom *argv)
     }
 
     rcp_sppp_data(x->parser, data, argc - offset);
+
+    delete [] data;
 }
 
 
@@ -113,9 +108,9 @@ void *sppp_new(t_symbol *s, int argc, t_atom *argv)
 
     for (int i=0; i<argc; i++)
     {
-        if (CanbeInt(argv[i]))
+        if (canBeInt(argv[i]))
         {
-            buffer_size = GetAInt(argv[i], 1024);
+            buffer_size = getAInt(argv[i], 1024);
         }
     }
 
@@ -160,3 +155,7 @@ void sppp_setup(void) {
     class_addmethod(sppp_class, (t_method)sppp_reset, gensym("reset"), A_NULL, A_NULL);
 }
 
+
+#ifdef __cplusplus
+} // extern "C"
+#endif

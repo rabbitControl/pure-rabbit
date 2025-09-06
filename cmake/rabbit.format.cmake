@@ -8,4 +8,8 @@ set(RCP_FORMAT_SOURCES
 
 pd_add_external(${RCP_FORMAT} "${RCP_FORMAT_SOURCES}")
 
-target_link_libraries(${RCP_FORMAT} rcpc)
+target_link_libraries(${RCP_FORMAT} PRIVATE rcpc)
+
+if (WIN32)
+  target_link_libraries(${RCP_FORMAT} PRIVATE wsock32 ws2_32)
+endif()

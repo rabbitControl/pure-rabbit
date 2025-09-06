@@ -5,11 +5,16 @@
 #elif defined(__linux__)
 #include <endian.h>
 #elif defined(_WIN32)
-// TODO
+#include <winsock.h>
 #endif
 
-
 #include <m_pd.h>
+
+
+#ifdef __cplusplus
+extern "C"{
+#endif
+
 
 typedef struct _sizeprefix
 {
@@ -33,7 +38,7 @@ void sizeprefix_list(t_sizeprefix *x, t_symbol *s, int argc, t_atom *argv)
 #elif defined(__linux__)
     uint32_t n = htobe32(argc);
 #elif defined(_WIN32)
-    // TODO
+    uint32_t n = htonl(argc);
 #endif
 
     memcpy(size_c, &n, sizeof(uint32_t));
@@ -85,3 +90,7 @@ void sizeprefix_setup(void) {
     class_addlist(sizeprefix_class, (t_method)sizeprefix_list);
 }
 
+
+#ifdef __cplusplus
+} // extern "C"
+#endif

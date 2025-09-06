@@ -4,6 +4,14 @@
 
 #include <rcp_slip.h>
 
+#include "PdMaxUtils.h"
+
+using namespace PdMaxUtils;
+
+
+#ifdef __cplusplus
+extern "C"{
+#endif
 
 typedef struct _slipdecoder
 {
@@ -18,23 +26,6 @@ typedef struct _slipdecoder
 static t_class *slipdecoder_class;
 
 
-static float GetFloat(const t_atom a) { return a.a_w.w_float; }
-static bool IsFloat(const t_atom a) { return a.a_type == A_FLOAT; }
-
-#ifdef PD_MAJOR_VERSION
-static float GetAFloat(const t_atom a, float def) { return IsFloat(a)?GetFloat(a):def; }
-static bool IsInt(const t_atom a) { return false; }
-static void SetInt(t_atom *a, int v) { a->a_type = A_FLOAT; a->a_w.w_float = (float)v; }
-#else
-static float GetAFloat(const t_atom a, float def = 0) { return IsFloat(a)?GetFloat(a):(IsInt(a)?GetInt(a):def); }
-static bool IsInt(const t_atom a) { return a.a_type == A_INT; }
-static void SetInt(t_atom *a,int v) { a->a_type = A_INT; a->a_w.w_long = v; }
-#endif
-
-static bool CanbeInt(const t_atom a) { return IsFloat(a) || IsInt(a); }
-static int GetAInt(const t_atom a,int def) { return (int)GetAFloat(a,(float)def); }
-
-
 static void packet_cb(char* data, size_t data_size, void* user)
 {
     if (user == NULL)
@@ -44,14 +35,16 @@ static void packet_cb(char* data, size_t data_size, void* user)
 
     t_slipdecoder* x = (t_slipdecoder*)user;
 
-    t_atom atoms[data_size];
+    t_atom* atoms = new t_atom[data_size];
 
     for (size_t i=0; i<data_size; i++)
     {
-        SetInt(&atoms[i], (unsigned char)data[i]);
+        setInt(atoms[i], (unsigned char)data[i]);
     }
 
     outlet_list(x->list_out, NULL, data_size, atoms);
+
+    delete [] atoms;
 }
 
 
@@ -70,9 +63,9 @@ void slipdecoder_list(t_slipdecoder *x, t_symbol *s, int argc, t_atom *argv)
 {
     for (int i=0; i<argc; i++)
     {
-        if (CanbeInt(argv[i]))
+        if (canBeInt(argv[i]))
         {
-            int id = GetAInt(argv[i], -1);
+            int id = getAInt(argv[i], -1);
             if (id >= 0 &&
                 id < 256)
             {
@@ -93,9 +86,9 @@ void *slipdecoder_new(t_symbol *s, int argc, t_atom *argv)
 
     for (int i=0; i<argc; i++)
     {
-        if (CanbeInt(argv[i]))
+        if (canBeInt(argv[i]))
         {
-            buffer_size = GetAInt(argv[i], 1024);
+            buffer_size = getAInt(argv[i], 1024);
         }
     }
 
@@ -141,3 +134,8 @@ void slipdecoder_setup(void) {
     class_addfloat(slipdecoder_class, (t_method)slipdecoder_float);
     class_addlist(slipdecoder_class, (t_method)slipdecoder_list);
 }
+
+
+#ifdef __cplusplus
+} // extern "C"
+#endif

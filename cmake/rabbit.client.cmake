@@ -15,6 +15,6 @@ set(RCP_CLIENT_SOURCES
 pd_add_external(${RCP_CLIENT} "${RCP_CLIENT_SOURCES}")
 
 scaryws_setup_target(${RCP_CLIENT})
-target_link_libraries(${RCP_CLIENT} scaryws)
-target_link_libraries(${RCP_CLIENT} rcpc)
+target_link_libraries(${RCP_CLIENT} PRIVATE scaryws)
+target_link_libraries(${RCP_CLIENT} PRIVATE rcpc)
 
