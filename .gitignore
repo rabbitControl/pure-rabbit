@@ -62,6 +62,7 @@ CMakeUserPresets.json
 #cmake-build-*
 
 build/**
+_build/**
 
 # Built pd binaries
 *.pd_linux
