@@ -410,7 +410,7 @@ void ParameterServer::exposeParameter(int argc, t_atom* argv)
             if (min.isSet()) rcp_parameter_set_min_float(p, min.get());
             if (max.isSet()) rcp_parameter_set_max_float(p, max.get());
             if (order.isSet()) rcp_parameter_set_order(RCP_PARAMETER(p), order.get());
-            if (readonly.isSet()) rcp_parameter_set_readonly(RCP_PARAMETER(p), readonly.get() > 0);
+            if (readonly.isSet()) rcp_parameter_set_readonly(RCP_PARAMETER(p), readonly.get());
 
             // set default value
             rcp_parameter_set_value_float(p, 0);
@@ -430,7 +430,7 @@ void ParameterServer::exposeParameter(int argc, t_atom* argv)
             if (min.isSet()) rcp_parameter_set_min_int32(p, (int32_t)min.get());
             if (max.isSet()) rcp_parameter_set_max_int32(p, (int32_t)max.get());
             if (order.isSet()) rcp_parameter_set_order(RCP_PARAMETER(p), order.get());
-            if (readonly.isSet()) rcp_parameter_set_readonly(RCP_PARAMETER(p), readonly.get() > 0);
+            if (readonly.isSet()) rcp_parameter_set_readonly(RCP_PARAMETER(p), readonly.get());
 
             // set default value
             rcp_parameter_set_value_int32(p, 0);
@@ -448,7 +448,7 @@ void ParameterServer::exposeParameter(int argc, t_atom* argv)
         if (p != NULL)
         {
             if (order.isSet()) rcp_parameter_set_order(RCP_PARAMETER(p), order.get());
-            if (readonly.isSet()) rcp_parameter_set_readonly(RCP_PARAMETER(p), readonly.get() > 0);
+            if (readonly.isSet()) rcp_parameter_set_readonly(RCP_PARAMETER(p), readonly.get());
 
             // set default value
             rcp_parameter_set_value_bool(p, false);
@@ -466,7 +466,7 @@ void ParameterServer::exposeParameter(int argc, t_atom* argv)
         if (p != NULL)
         {
             if (order.isSet()) rcp_parameter_set_order(RCP_PARAMETER(p), order.get());
-            if (readonly.isSet()) rcp_parameter_set_readonly(RCP_PARAMETER(p), readonly.get() > 0);
+            if (readonly.isSet()) rcp_parameter_set_readonly(RCP_PARAMETER(p), readonly.get());
 
             // set default value
             rcp_parameter_set_value_string(p, "");
@@ -483,7 +483,7 @@ void ParameterServer::exposeParameter(int argc, t_atom* argv)
         if (p != NULL)
         {
             if (order.isSet()) rcp_parameter_set_order(RCP_PARAMETER(p), order.get());
-            if (readonly.isSet()) rcp_parameter_set_readonly(RCP_PARAMETER(p), readonly.get() > 0);
+            if (readonly.isSet()) rcp_parameter_set_readonly(RCP_PARAMETER(p), readonly.get());
 
             rcp_parameter_set_user(RCP_PARAMETER(p), this);
             rcp_bang_parameter_set_bang_cb(p, bangCb);
