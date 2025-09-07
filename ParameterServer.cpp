@@ -79,10 +79,11 @@ static void pd_id_parameter_output(t_pd *obj, void *data)
         t_rabbit_server_pd* x = (t_rabbit_server_pd*)obj;
 
         if (_list &&
-            _list->size() > 1)
+            _list->size() > 1 &&
+            (_list->data()+1)->a_type == A_SYMBOL)
         {
             outlet_float(x->parameter_id_out, (*_list)[0].a_w.w_float);
-            outlet_list(x->parameter_out, NULL, _list->size()-1, _list->data()+1);
+            outlet_anything(x->parameter_out, (_list->data()+1)->a_w.w_symbol, _list->size()-2, _list->data()+2);
         }
     }
 
