@@ -685,23 +685,34 @@ void ParameterServer::setRabbithole(const std::string& uri)
 {
     std::lock_guard<std::recursive_mutex> lock(Threading::mutex);
 
+    if (!uri.empty() &&
+        uri.rfind("ws", 0) != 0 &&
+        uri.rfind("http", 0) != 0)
+    {
+        pd_error(m_x, "invalid uri for rabbithole");
+        return;
+    }
+
     if (m_rabbitholeTransporter)
     {
         m_rabbitholeTransporter.reset();
     }
 
-    if (m_server)
+    if (!uri.empty())
     {
-        m_rabbitholeTransporter = std::make_shared<RabbitHoleServerTransporter>((t_pd*)m_x, m_server);
-    }
+        if (m_server)
+        {
+            m_rabbitholeTransporter = std::make_shared<RabbitHoleServerTransporter>((t_pd*)m_x, m_server);
+        }
 
-    if (m_rabbitholeTransporter)
-    {
-        m_rabbitholeTransporter->connect(uri);
-    }
-    else
-    {
-        pd_error(m_x, "could not create rabbithole transporter");
+        if (m_rabbitholeTransporter)
+        {
+            m_rabbitholeTransporter->connect(uri);
+        }
+        else
+        {
+            pd_error(m_x, "could not create rabbithole transporter");
+        }
     }
 }
 

@@ -131,11 +131,27 @@ void rcpserver_remove_parameter_sym(t_rabbit_server_pd *x, t_symbol *s, int argc
 }
 
 //
-void rcpserver_set_rabbithole(t_rabbit_server_pd *x, t_symbol* sym)
+void rcpserver_set_rabbithole(t_rabbit_server_pd *x, t_symbol* sym, int argc, t_atom *argv)
 {
-    if (x->parameter_server)
+    if (!x->parameter_server)
     {
-        x->parameter_server->setRabbithole(sym->s_name);
+        return;
+    }
+
+    if (argc > 0)
+    {
+        if (argv[0].a_type == A_SYMBOL)
+        {
+            x->parameter_server->setRabbithole(argv[0].a_w.w_symbol->s_name);
+        }
+        else
+        {
+            pd_error(x, "Invalid argument for rabbithole");
+        }
+    }
+    else
+    {
+        x->parameter_server->setRabbithole("");
     }
 }
 
@@ -250,7 +266,7 @@ void setup_rabbit0x2eserver(void) {
     class_addmethod(rcp_server_pd_class, (t_method)rcpserver_parameter_set_minmax, gensym("setminmax"), A_GIMME, A_NULL);
 
     // rabbithole
-    class_addmethod(rcp_server_pd_class, (t_method)rcpserver_set_rabbithole, gensym("rabbithole"), A_SYMBOL, A_NULL);
+    class_addmethod(rcp_server_pd_class, (t_method)rcpserver_set_rabbithole, gensym("rabbithole"), A_GIMME, A_NULL);
     class_addmethod(rcp_server_pd_class, (t_method)rcpserver_set_rabbithole_interval, gensym("rabbithole_interval"), A_FLOAT, A_NULL);
 
     // raw
