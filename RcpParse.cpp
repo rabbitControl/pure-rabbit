@@ -3,11 +3,11 @@
 * rabbitcontrol - a protocol and data-format for remote control.
 *
 * https://rabbitcontrol.cc
-* https://github.com/rabbitcontrol/rcp-pdmaxutils
+* https://github.com/rabbitControl/pure-rabbit
 *
 * This file is part of rabbitcontrol for Pd and Max.
 *
-* Written by Ingo Randolf, 2021 - 2022
+* Written by Ingo Randolf, 2025
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
