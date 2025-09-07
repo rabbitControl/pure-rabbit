@@ -55,24 +55,6 @@ static void pd_id_parameter_output(t_pd *obj, void *data)
     }
 }
 
-static inline void pd_client_reset(t_rabbit_server_pd* x)
-{
-    if (x != NULL)
-    {
-        size_t count = x->parameter_server->clientCount();
-
-        x->clients -= count;
-
-        if (x->clients < 0)
-        {
-            pd_error(x, "invalid client count");
-            x->clients = 0;
-        }
-
-        outlet_float(x->client_count_out, x->clients);
-    }
-}
-
 
 namespace rcp
 {
@@ -248,9 +230,6 @@ void ParameterServer::listen(int port)
         // port not changed
         return;
     }
-
-    // reset connected clients
-    pd_client_reset(m_x);
 
     // stop listening
     m_transporter->unbind();
