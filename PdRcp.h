@@ -48,17 +48,16 @@
     - rename rcp externals to rabbit (e.g.: rcp.server -> rabbit.server)
     - add backward compatibility patches (breaks raw server and client)
     - remove flext
-    - use boost beast for websockets (remove old websocketpp)
+    - use Boost.Beast for websockets (remove websocketpp)
     - boost version 1.88.0
-    - individual externals
+    - individual externals (instead of one library)
     - statically link dependecies (boost_url, OpenSSL)
     - increase OpenSSL to 3.5.2
     - prefix "get" for getter (e.g.: order -> getorder)
     - rabbit.client to prefer "connect" and "disconnect"
-    - info outlet to output anything (instead of list)    
+    - outlets to output anything (instead of list)
     - remove rcp.debug
-    - remove ws.client / ws.server (moved to seperate project)
-
+    - remove ws.client and ws.server (moved to seperate project)
  */
 
 class PdRcp
