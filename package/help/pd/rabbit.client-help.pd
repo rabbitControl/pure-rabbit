@@ -21,14 +21,16 @@
 #X text 304 237 connect to a rcp server;
 #X text 47 123 Rabbitcontrol allows you to control values (parameters) on a remote system in an easy way. The remote system (rcp-server) exposes parameters which are received and controlled by rcp-clients.;
 #N canvas 157 94 380 288 parameter-info 0;
-#X msg 137 108 info mybang;
-#X msg 148 132 readonly mybang;
-#X msg 55 70 info sensor;
 #X text 34 20 get information about parameters;
 #X obj 55 215 s rcp_client;
-#X connect 0 0 4 0;
-#X connect 1 0 4 0;
-#X connect 2 0 4 0;
+#X msg 55 70 getinfo sensor;
+#X msg 154 139 getinfo mybang;
+#X msg 165 163 getreadonly mybang;
+#X msg 69 94 getreadonly sensor;
+#X connect 2 0 1 0;
+#X connect 3 0 1 0;
+#X connect 4 0 1 0;
+#X connect 5 0 1 0;
 #X restore 511 337 pd parameter-info;
 #X text 344 536 info <group-label-list> <value> <min> <max> <id> <type>;
 #X text 121 289 set values;
@@ -44,7 +46,6 @@
 #X text 31 48 x;
 #N canvas 222 106 342 223 META 0;
 #X text 12 25 KEYWORDS remote control;
-#X text 12 5 DESCRIPTION A RabbitControl server for pd;
 #X text 12 185 AUTHOR Ingo Randolf;
 #X text 12 65 INLET_0 data;
 #X text 12 105 OUTLET_1 parameter id;
@@ -52,6 +53,7 @@
 #X text 12 85 OUTLET_0 client outlet;
 #X text 12 125 OUTLET_2 connected;
 #X text 12 45 LICENSE GPL v3;
+#X text 12 5 DESCRIPTION RabbitControl client;
 #X restore 561 27 pd META;
 #X obj 239 313 tgl 19 0 empty empty empty 0 -10 0 12 #fcfcfc #000000 #000000 0 1;
 #X msg 91 238 connect ws://localhost:10000;

@@ -33,12 +33,12 @@
 #X text 31 48 x;
 #N canvas 318 190 342 179 META 0;
 #X text 12 25 KEYWORDS remote control;
-#X text 12 5 DESCRIPTION A RabbitControl server for pd;
 #X text 12 145 AUTHOR Ingo Randolf;
 #X text 12 65 INLET_0 data;
 #X text 12 105 OUTLET_1 parameter id;
 #X text 12 45 LICENSE GPL v3;
 #X text 12 85 OUTLET_0 rabbit packet outlet;
+#X text 12 5 DESCRIPTION A RabbitControl parser;
 #X restore 561 27 pd META;
 #X obj 131 416 print parameter_id;
 #X connect 0 0 25 0;

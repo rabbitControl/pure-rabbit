@@ -42,11 +42,11 @@
 #N canvas 439 130 342 188 META 0;
 #X text 12 25 KEYWORDS remote control;
 #X text 12 145 AUTHOR Ingo Randolf;
-#X text 12 5 DESCRIPTION RabbitControl for pd;
 #X text 12 45 LICENSE GPL v3;
 #X text 12 65 INLET_0 data;
 #X text 12 85 OUTLET_0 rcp packet;
 #X text 12 105 OUTLET_1 info outlet;
+#X text 12 5 DESCRIPTION RabbitControl packet formater;
 #X restore 481 17 pd META;
 #X connect 0 0 30 0;
 #X connect 1 0 30 0;
