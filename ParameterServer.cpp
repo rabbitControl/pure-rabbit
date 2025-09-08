@@ -762,7 +762,7 @@ void ParameterServer::setRabbitholeInterval(const int i)
     }
 }
 
-void ParameterServer::handle_raw_data(char* data, size_t size)
+void ParameterServer::handleRawData(char* data, size_t size)
 {
     if (m_transporter)
     {

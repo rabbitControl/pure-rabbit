@@ -67,7 +67,7 @@ public:
 private:
     //
     void outputIdParameterList(std::vector<t_atom>* list) override;
-    void handle_raw_data(char* data, size_t size) override;
+    void handleRawData(char* data, size_t size) override;
 
 private:
     rcp_group_parameter* createGroups(int argc, t_atom* argv, std::string& outLabel);

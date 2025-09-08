@@ -238,7 +238,7 @@ void ParameterServerClientBase::any(t_symbol* sym, int argc, t_atom* argv)
     {
         if (m_raw)
         {
-            raw_data_list(argc, argv);
+            _rawDataList(argc, argv);
             return;
         }
     }
@@ -285,7 +285,7 @@ void ParameterServerClientBase::any(t_symbol* sym, int argc, t_atom* argv)
 }
 
 
-void ParameterServerClientBase::raw_data_list(int argc, t_atom* argv)
+void ParameterServerClientBase::_rawDataList(int argc, t_atom* argv)
 {
     std::vector<char> data(argc);
     int offset = 0;
@@ -310,7 +310,7 @@ void ParameterServerClientBase::raw_data_list(int argc, t_atom* argv)
         }
     }
 
-    handle_raw_data(data.data(), argc-offset);
+    handleRawData(data.data(), argc-offset);
 }
 
 

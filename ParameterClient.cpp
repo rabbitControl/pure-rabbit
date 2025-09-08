@@ -370,7 +370,7 @@ void ParameterClient::outputIdParameterList(std::vector<t_atom>* list)
     pd_queue_mess(&pd_maininstance, (t_pd*)m_x, list, pd_id_parameter_output);
 }
 
-void ParameterClient::handle_raw_data(char* data, size_t size)
+void ParameterClient::handleRawData(char* data, size_t size)
 {
     if (m_transporter)
     {

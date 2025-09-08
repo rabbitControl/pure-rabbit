@@ -78,7 +78,7 @@ public:
 protected:
     // ParameterServerClientBase
     virtual void outputIdParameterList(std::vector<t_atom>* list) = 0;
-    virtual void handle_raw_data(char* data, size_t size) = 0;
+    virtual void handleRawData(char* data, size_t size) = 0;
 
 protected:
     void setOutlets(t_outlet* parameterOutlet,
@@ -99,7 +99,7 @@ protected:
 private:
     void _outputInfo(rcp_parameter* parameter, int argc, t_atom* argv);
     void _input(rcp_parameter* parameter, int argc, t_atom* argv);
-    void raw_data_list(int argc, t_atom* argv);
+    void _rawDataList(int argc, t_atom* argv);
 
 private:
     void* m_obj{nullptr};
