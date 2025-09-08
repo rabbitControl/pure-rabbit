@@ -85,6 +85,29 @@ void pd_client_disconnected(t_pd *obj, void *data)
     }
 }
 
+void pd_raw_data_out(t_pd *obj, void *data)
+{
+    std::string* str = (std::string*)data;
+
+    if (obj != NULL)
+    {
+        t_rabbit_server_pd* x = (t_rabbit_server_pd*)obj;
+        if (str)
+        {
+            x->parameter_server->dataOut(str->data(), str->length());
+        }
+    }
+    else
+    {
+        // data got cancled
+    }
+
+    if (str)
+    {
+        delete str;
+    }
+}
+
 
 // pd interface
 

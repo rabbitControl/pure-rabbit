@@ -40,6 +40,8 @@
 
 #include <rcp_server_transporter.h>
 
+#include <m_pd.h>
+
 #include "IServerTransporter.h"
 
 namespace rcp
@@ -50,10 +52,10 @@ class ParameterServer;
 class PdServerTransporter : public IServerTransporter
 {
 public:
-    PdServerTransporter(ParameterServer* pdServer);
+    PdServerTransporter(t_pd* x);
     ~PdServerTransporter();
 
-    ParameterServer* pdServer() const;
+    void rawOut(const char* data, size_t data_size);
 
 public:
     // IServerTransporter
@@ -65,8 +67,8 @@ public:
     bool isListening() const override { return true; }
     size_t clientCount() const override { return 0; }
 
-private:
-    ParameterServer* m_pdServer{nullptr};
+private:    
+    t_pd* m_x{nullptr};
     rcp_server_transporter* m_transporter{nullptr};
 };
 

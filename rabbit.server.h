@@ -71,6 +71,7 @@ typedef struct _rabbit_server_pd
 
 void pd_client_connected(t_pd *obj, void *data);
 void pd_client_disconnected(t_pd *obj, void *data);
+void pd_raw_data_out(t_pd *obj, void *data);
 
 #ifdef __cplusplus
 } // extern "C"

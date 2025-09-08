@@ -166,7 +166,7 @@ ParameterServer::ParameterServer(t_rabbit_server_pd* x, int argc, t_atom *argv)
 
         setRawOutlet(m_x->raw_out);
 
-        m_transporter = new PdServerTransporter(this);
+        m_transporter = new PdServerTransporter((t_pd*)x);
     }
     else
     {

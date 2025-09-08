@@ -37,38 +37,42 @@
 
 #include "PdServerTransporter.h"
 
+#include <iostream>
 #include <rcp_memory.h>
 #include <rcp_server.h>
 
-#include "ParameterServer.h"
 #include "Threading.h"
+
+#include "rabbit.server.h"
 
 
 static void pd_server_transporter_sendToOne(rcp_server_transporter* transporter, const char* data, size_t data_size, void* /*clientId*/)
 {
-    // TODO: this might get called from rhl-thread
+    // NOTE: this can get called from rabbithole thread
     if (transporter &&
             transporter->user)
     {
-        ((rcp::PdServerTransporter*)transporter->user)->pdServer()->dataOut(data, data_size);
+        ((rcp::PdServerTransporter*)transporter->user)->rawOut(data, data_size);
     }
 }
 
 static void pd_server_transporter_sendToAll(rcp_server_transporter* transporter, const char* data, size_t data_size, void* /*excludeId*/)
 {
-    // TODO: this might get called from rhl-thread
+    std::cout << "PdServerTransporter send to all:" << std::this_thread::get_id() << std::endl;
+
+    // NOTE: this can get called from rabbithole thread
     if (transporter &&
             transporter->user)
     {
-        ((rcp::PdServerTransporter*)transporter->user)->pdServer()->dataOut(data, data_size);
+        ((rcp::PdServerTransporter*)transporter->user)->rawOut(data, data_size);
     }
 }
 
 namespace rcp {
 
 
-PdServerTransporter::PdServerTransporter(ParameterServer* pdServer)
-    : m_pdServer(pdServer)
+PdServerTransporter::PdServerTransporter(t_pd* x)
+    : m_x(x)
 {
     m_transporter = (rcp_server_transporter*)RCP_CALLOC(1, sizeof (rcp_server_transporter));
 
@@ -91,14 +95,17 @@ PdServerTransporter::~PdServerTransporter()
     }
 }
 
+void PdServerTransporter::rawOut(const char* data, size_t size)
+{
+    // can be on a thread
+    auto str = new std::string(data, size);
+
+    pd_queue_mess(&pd_maininstance, m_x, str, pd_raw_data_out);
+}
+
 rcp_server_transporter* PdServerTransporter::transporter() const
 {
     return m_transporter;
-}
-
-ParameterServer* PdServerTransporter::pdServer() const
-{
-    return m_pdServer;
 }
 
 void PdServerTransporter::pushData(const char* data, size_t size) const
