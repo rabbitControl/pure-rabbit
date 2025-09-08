@@ -47,7 +47,7 @@
 
 using namespace PdMaxUtils;
 
-static void postAtoms(int argc, t_atom* argv)
+static void postAtoms(int argc, const t_atom* argv)
 {
     for (int i=0; i<argc; i++)
     {
@@ -72,7 +72,7 @@ static void postAtoms(int argc, t_atom* argv)
     }
 }
 
-static bool setAtomValue(rcp_parameter* param, t_atom& atom)
+static bool setAtomValue(rcp_parameter* param, const t_atom& atom)
 {
     if (param == nullptr) return false;
 
@@ -115,6 +115,9 @@ static bool setAtomValue(rcp_parameter* param, t_atom& atom)
         }
     }
     else if (type == DATATYPE_BANG)
+    {
+    }
+    else if (type == DATATYPE_GROUP)
     {
     }
 
@@ -214,7 +217,6 @@ void ParameterServerClientBase::list(int argc, t_atom* argv)
     if (id != 0)
     {
         rcp_parameter* p = rcp_manager_get_parameter(m_manager, id);
-        // TODO: check for group and bang parameter
 
         if (setAtomValue(p, argv[argc-1]))
         {
