@@ -56,6 +56,26 @@ static t_class *rcp_server_pd_class;
 
 // synchronized from threaded transporters
 
+void pd_server_bound(t_pd *obj, void *data)
+{
+    if (obj != NULL)
+    {
+        t_rabbit_server_pd* x = (t_rabbit_server_pd*)obj;
+
+        outlet_float(x->listening_out, 1);
+    }
+}
+
+void pd_server_unbound(t_pd *obj, void *data)
+{
+    if (obj != NULL)
+    {
+        t_rabbit_server_pd* x = (t_rabbit_server_pd*)obj;
+
+        outlet_float(x->listening_out, 0);
+    }
+}
+
 void pd_client_connected(t_pd *obj, void *data)
 {
     if (obj != NULL)

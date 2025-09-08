@@ -62,6 +62,7 @@ typedef struct _rabbit_server_pd
     t_outlet* parameter_out;
     t_outlet* parameter_id_out;
     t_outlet* client_count_out;
+    t_outlet* listening_out;
     t_outlet* info_out;
 
     t_inlet* raw_in;
@@ -69,6 +70,8 @@ typedef struct _rabbit_server_pd
 
 } t_rabbit_server_pd;
 
+void pd_server_bound(t_pd *obj, void *data);
+void pd_server_unbound(t_pd *obj, void *data);
 void pd_client_connected(t_pd *obj, void *data);
 void pd_client_disconnected(t_pd *obj, void *data);
 void pd_raw_data_out(t_pd *obj, void *data);

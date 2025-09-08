@@ -108,6 +108,7 @@ ParameterServer::ParameterServer(t_rabbit_server_pd* x, int argc, t_atom *argv)
     m_x->parameter_out = outlet_new(&m_x->x_obj, &s_list);
     m_x->parameter_id_out = outlet_new(&m_x->x_obj, &s_float);
     m_x->client_count_out = outlet_new(&m_x->x_obj, &s_float);
+    m_x->listening_out = outlet_new(&m_x->x_obj, &s_float);
     m_x->info_out = outlet_new(&m_x->x_obj, &s_list);
 
     setOutlets(m_x->parameter_out,
@@ -211,6 +212,7 @@ ParameterServer::~ParameterServer()
     outlet_free(m_x->parameter_out);
     outlet_free(m_x->parameter_id_out);
     outlet_free(m_x->client_count_out);
+    outlet_free(m_x->listening_out);
     outlet_free(m_x->info_out);
 
     if (m_x->raw_out)

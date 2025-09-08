@@ -153,10 +153,12 @@ size_t WebsocketServerTransporter::clientCount() const
 // threaded
 void WebsocketServerTransporter::listening()
 {
+    pd_queue_mess(&pd_maininstance, (t_pd*)m_x, NULL, pd_server_bound);
 }
 
 void WebsocketServerTransporter::closed()
 {
+    pd_queue_mess(&pd_maininstance, (t_pd*)m_x, NULL, pd_server_unbound);
 }
 
 void WebsocketServerTransporter::clientConnected(void* client)
