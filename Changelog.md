@@ -1,0 +1,12 @@
+### 2.0.0
+- sync threads into pd-thread (needs Pd >= 0.56.0)
+- rename rcp externals to rabbit (e.g.: rcp.server -> rabbit.server)
+- add backward compatibility patches (breaks raw server and client)
+- remove flext
+- use Boost.Beast for websockets (remove websocketpp)
+- individual externals (instead of one library)
+- prefix "get" for getter (e.g.: order -> getorder)
+- rabbit.client to prefer "connect" and "disconnect"
+- outlets to output anything (instead of list)
+- remove rcp.debug
+- remove ws.client and ws.server (moved to separate project)
