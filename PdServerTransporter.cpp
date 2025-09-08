@@ -58,8 +58,6 @@ static void pd_server_transporter_sendToOne(rcp_server_transporter* transporter,
 
 static void pd_server_transporter_sendToAll(rcp_server_transporter* transporter, const char* data, size_t data_size, void* /*excludeId*/)
 {
-    std::cout << "PdServerTransporter send to all:" << std::this_thread::get_id() << std::endl;
-
     // NOTE: this can get called from rabbithole thread
     if (transporter &&
             transporter->user)
